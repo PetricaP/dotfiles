@@ -1,0 +1,4 @@
+#!/bin/bash
+sed '1d' /home/petricap/Music/urls > /home/petricap/Music/tmp; mv /home/petricap/Music/tmp /home/petricap/Music/urls
+chromium $(head -n 1 /home/petricap/Music/urls)
+  

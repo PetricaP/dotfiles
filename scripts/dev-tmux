@@ -1,0 +1,12 @@
+#!/bin/zsh
+if tmux a 2>/dev/null
+then
+
+else
+    cd ~
+    tmux new-session -s "dev" -d 'nvim';
+    tmux new-window -n "shell";
+    tmux new-window -n "i3config" 'nvim ~/.config/i3/config'
+    tmux new-window -n "init.vim" 'nvim ~/.SpaceVim.d/init.vim'
+    tmux a -t "dev"\; select-window -t 0\;
+fi

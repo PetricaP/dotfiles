@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ $1 = "-c" ]]; then
+    printf "#include \"$2.hpp\"\n\n$2::$2(){\n\n}" > src/$2.cpp
+    printf "#pragma once\n\nclass $2 {\npublic:\n  $2();\nprivate:\n};" > include/$2.hpp
+elif [[ $3 = "-e" && $1 = "-cd" ]]; then
+    printf "#include \"$2.hpp\"\n\n$2::$2(){\n\n}\n\n$2::~$2(){\n\n}" > src/$2.cpp
+    printf "#pragma once\n\n#include \"$4.hpp\"\\n\nclass $2 : public $4 {\npublic:\n  $2();\n  ~$2();\nprivate:\n};" > include/$2.hpp
+elif [[ $1 = "-cd" ]]; then
+    printf "#include \"$2.hpp\"\n\n$2::$2(){\n\n}\n\n$2::~$2(){\n\n}" > src/$2.cpp
+    printf "#pragma once\n\nclass $2 {\npublic:\n  $2();\n  ~$2();\nprivate:\n};" > include/$2.hpp
+else
+    printf "#include \"$1.hpp\"" > src/$1.cpp
+    printf "#pragma once\n\nclass $1 {\npublic:\n\nprivate:\n};" > include/$1.hpp
+fi
+# Maybe add support for auto implementing virtual functions

@@ -1,0 +1,350 @@
+# vim: filetype=i3
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+set $app Mod1
+# Home row direction keys, like vim
+set $browser google-chrome-stable
+# Your preferred terminal emulator
+set $term termite
+# Your preferred application launcher
+set $menu dmenu_run
+
+hide_edge_borders both
+gaps inner 0
+default_border pixel 0
+
+set $pause --no-startup-id cmus-remote -u
+set $next --no-startup-id cmus-remote -n
+set $prev --no-startup-id cmus-remote -r
+set $lilfor --no-startup-id cmus-remote -k +10
+set $bigfor --no-startup-id cmus-remote -k +120
+set $lilbak --no-startup-id cmus-remote -k -10
+set $bigbak --no-startup-id cmus-remote -k -120
+set $beg --no-startup-id cmus-remote -k 00:00:00
+mouse_warping output
+seamless_mouse on
+
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg ~/Pictures/Wallpapers/yosemite.jpg fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # start a terminal
+    bindsym $mod+Return exec $term
+
+    # kill focused window
+    bindsym $mod+Shift+q kill
+
+    # start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # reload the configuration file
+    bindsym $mod+Shift+r reload
+
+    # exit sway (logs you out of your wayland session)
+    bindsym $mod+Escape exit
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # _move_ the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+#Colors
+set $bg-color 	         #1E2127
+set $inactive-bg-color   #1d2021
+set $focused-bg-color   #838383
+set $text-color          #8F8F8F
+set $inactive-border-color          #3F3F3F
+set $inactive-text-color #8F8F8F
+set $focused-text-color   #000000
+
+# set $background #262626
+set $background #282C34
+set $focused-background #dc6f41
+set $foreground #ffffff
+set $gray       #333333
+set $primary    #9FA4A9
+set $secondary  #b06534
+set $tertiary   #b6ad9a
+set $warning    #e0a75f
+
+
+#window colors
+client.focused          $primary    $primary   $background $primary
+client.focused_inactive $background $primary   $foreground $background
+client.unfocused        $gray       $gray      $background $secondary
+client.urgent           $warning    $warning   $foreground $warning
+
+bar {
+    # mode hide
+    colors {
+        background $background
+
+        # Colors go <border> <background> <text> <indicator>
+        focused_workspace $background $background $primary
+        active_workspace $primary $background $foreground
+        inactive_workspace $background $background #666666
+        urgent_workspace $foreground $warning #666666
+    }
+    font pango:System San Francisco 9
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    strip_workspace_numbers
+#status_command ~/.config/i3/bar/bumblebee-status -m battery pasink cpu cputemp gputemp nic layout disk brightness date weather time -t gruvbox-powerline -p disk.path=/home layout.lang="us|ru|ro" nic.exclude="lo,eno1" date.format="%a, %d %b %Y" time.format="%H:%M"
+    position top
+    height 20
+}
+
+bindsym $mod+m		exec $pause
+bindsym $mod+Shift+m    workspace "6 ♪"; exec --no-startup-id $term -e cmus
+bindsym $mod+c		workspace "2 "; exec --no-startup-id $browser
+bindsym $mod+Shift+c	exec --no-startup-id $browser --incognito
+bindsym $mod+Return 		exec --no-startup-id $term 
+bindsym $mod+Shift+Return 		workspace "1 "; exec --no-startup-id $term -e tmux
+bindsym $mod+z              exec --no-startup-id $term -e tmux 
+bindsym $app+Return exec --no-startup-id xterm -T floatme 
+bindsym $mod+Shift+space 	floating toggle
+bindsym $mod+space		focus mode_toggle
+bindsym $mod+Shift+Escape		exec shutdown now
+bindsym $mod+BackSpace		exec --no-startup-id ~/.config/Scripts/flash_win.sh
+bindsym $mod+Shift+BackSpace	exec sudo reboot
+bindsym $mod+Tab		workspace back_and_forth
+bindsym $mod+q		kill
+bindsym $mod+Shift+q	kill
+bindsym $mod+v		workspace "1 "; exec --no-startup-id $term -e tmvim
+bindsym $app+m    exec --no-startup-id menutray -i &
+bindsym $app+f		exec --no-startup-id messengerfordesktop; workspace $ws5
+bindsym $app+w		exec --no-startup-id Whatsapp; workspace $ws5
+bindsym $mod+w    exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
+bindsym $mod+Shift+w    exec --no-startup-id vboxmanage startvm Windows
+bindsym $mod+r 		exec --no-startup-id $term -e ranger
+bindsym $app+r 		exec --no-startup-id xterm -T floatme -e ranger
+bindsym $mod+t		split toggle
+bindsym $mod+Shift+t	gaps inner current set 15; gaps outer current set 15
+bindsym $mod+Shift+u	resize shrink width 10 px or 10ppt
+bindsym $mod+Shift+i	resize shrink height 10 px or 10 ppt
+bindsym $mod+h 		exec --no-startup-id $term -e htop
+bindsym $mod+Shift+h 		exec --no-startup-id xterm -T floatme -e htop
+bindsym $mod+Shift+o	resize grow height 10 px or 10 ppt
+bindsym $mod+o		exec --no-startup-id $beg
+bindsym $mod+Shift+p	resize grow width 10 px or 10 ppt
+bindsym $mod+a		exec $term -e qalc
+bindsym $mod+Shift+a	exec pavucontrol
+bindsym $mod+s		gaps inner current plus 5
+bindsym $mod+Shift+s	gaps inner current minus 5
+bindsym $mod+Shift+d	gaps inner current set 0; gaps outer current set 0
+bindsym $mod+f		fullscreen toggle
+bindsym $mod+Shift+f	exec --no-startup-id syncthing -home="~/.syncthing"
+bindsym $mod+g		workspace prev
+bindsym $mod+Shift+g	exec --no-startup-id gimp; workspace $ws5
+bindsym $mod+j		focus left
+bindsym $mod+Shift+j	move left 30
+bindsym $mod+l		focus down
+bindsym $mod+Shift+l	move down 30
+bindsym $mod+k		focus up
+bindsym $mod+Shift+k	move up 30
+bindsym $mod+semicolon		focus right
+bindsym $mod+Shift+semicolon	move right 30
+bindsym $mod+x		exec --no-startup-id swaylock -i ~/Pictures/linux.png
+bindsym $mod+Shift+x	exec shutdown now
+bindsym $mod+Shift+v	exec --no-startup-id projectM-pulseaudio
+bindsym $mod+Shift+b	exec --no-startup-id blender; workspace $ws6
+bindsym $mod+n		exec $next
+bindsym $mod+p		exec $prev
+bindsym $mod+apostrophe	split horizontal ;; exec $term
+bindsym $mod+slash	split vertical ;; exec $term
+bindsym $mod+Shift+slash	kill
+bindsym $mod+backslash	workspace back_and_forth
+#END
+
+#Function Buttons
+bindsym F11		fullscreen toggle
+bindsym $mod+b bar mode toggle
+bindsym $mod+F3		exec --no-startup-id arandr
+bindsym $mod+F4		exec --no-startup-id sudo systemctl suspend
+bindsym $mod+F5		exec --no-startup-id sudo systemctl restart NetworkManager
+bindsym $mod+F7		exec transset-df -a --dec .15
+bindsym $mod+F8		exec transset-df -a --inc .15
+bindsym $mod+Shift+e		exec transset-df -a --inc .15
+bindsym $mod+e		exec transset-df -a --dec .15
+bindsym $mod+F9		exec --no-startup-id sudo bash ~/.config/i3/mount.sh
+bindsym $mod+F10	exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
+bindsym $mod+F12	exec --no-startup-id marble
+
+#Arrow Keys
+bindsym $mod+Left	focus left
+bindsym $mod+Down	focus down
+bindsym $mod+Up		focus up
+bindsym $mod+Right 	focus right
+bindsym $mod+Shift+Left	move left
+bindsym $mod+Shift+Down	move down
+bindsym $mod+Shift+Up	move up
+bindsym $mod+Shift+Right move right
+#END
+
+#Workspaces
+set $ws1 "1 "
+set $ws2 "2 "
+set $ws3 "3 "
+set $ws4 "4 "
+set $ws5 "5 "
+set $ws6 "6 ♪"
+set $ws7 "7 "
+set $ws8 "8 "
+set $ws9 "9 "
+set $ws10 "10 "
+
+# switch to workspace
+
+bindsym $mod+1	workspace $ws1 
+bindsym $mod+2	workspace $ws2 
+bindsym $mod+3	workspace $ws3 
+bindsym $mod+4	workspace $ws4 
+bindsym $mod+5	workspace $ws5 
+bindsym $mod+6	workspace $ws6 
+bindsym $mod+7	workspace $ws7 
+bindsym $mod+8	workspace $ws8 
+bindsym $mod+9	workspace $ws9 
+bindsym $mod+0	workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1	move container to workspace $ws1
+bindsym $mod+Shift+2	move container to workspace $ws2
+bindsym $mod+Shift+3	move container to workspace $ws3
+bindsym $mod+Shift+4	move container to workspace $ws4
+bindsym $mod+Shift+5	move container to workspace $ws5
+bindsym $mod+Shift+6	move container to workspace $ws6
+bindsym $mod+Shift+7	move container to workspace $ws7
+bindsym $mod+Shift+8	move container to workspace $ws8
+bindsym $mod+Shift+9	move container to workspace $ws9
+bindsym $mod+Shift+0	move container to workspace $ws10
+
+assign [class="Blender"] $ws7
+assign [class="VirtualBox"] $ws10
+assign [title="GIMP Startup"] $ws9
+assign [class="Gimp"] $ws9
+assign [class="Gooogle-chrome"] "2 "
+assign [class="Emacs"] $ws4
+assign [class="Messenger for Desktop"] $ws5
+assign [class="Xfce4-panel"] floating enable
+assign [title="^floatme$"] floating enable
+assign [class="Xfce4-appfinder"] floating enable
+assign [class="Gnome-calendar"] floating enable
+
+#Media
+bindsym $mod+plus		exec --no-startup-id pamixer -i 5
+bindsym $mod+minus 		exec --no-startup-id pamixer -d 5
+bindsym $mod+greater		exec --no-startup-id pamixer -i 5
+bindsym $mod+Shift+greater	exec --no-startup-id pamixer -i 15
+bindsym $mod+less 		exec --no-startup-id pamixer -d 5
+bindsym $mod+Shift+less		exec --no-startup-id pamixer -d 15
+bindsym XF86AudioRaiseVolume	exec --no-startup-id pamixer -i 5
+bindsym XF86AudioLowerVolume	exec --no-startup-id pamixer -d 5
+bindsym XF86AudioMute		exec --no-startup-id pamixer -t
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 # decrease screen brightness
+bindsym $mod+Shift+minus	exec --no-startup-id light -U 5 # decrease screen brightness
+bindsym $mod+Shift+plus	exec --no-startup-id light -A 5 # decrease screen brightness
+bindsym Print exec "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'"
+bindsym $app+u exec --no-startup-id "udisksctl mount -b /dev/sdb && $term -e ranger /media/petricap/"
+
+
+include /etc/sway/config.d/*

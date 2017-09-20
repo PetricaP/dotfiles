@@ -1,0 +1,41 @@
+{
+	"icons": [ "paxy97", "awesome-fonts" ],
+	"defaults": {
+		"default-separators": false,
+		"separator-block-width": -4
+	},
+	"cycle": [
+		{
+			"bg": "#666666",
+			"fg": "#111111"
+		},
+		{
+			"bg": "#777777",
+			"fg": "#111111"
+		},
+		{
+			"bg": "#888888",
+			"fg": "#000000"
+		},
+		{
+			"bg": "#999999",
+			"fg": "#111111"
+		},
+		{
+			"bg": "#aaaaaa",
+			"fg": "#000000"
+		}
+	],
+	"dnf": {
+		"good": {
+			"fg": "#002b36",
+			"bg": "#859900"
+		}
+	},
+	"battery": {
+		"AC": {
+			"fg": "#1d2021",
+			"bg": "#b8bb26"
+		}
+	}
+}

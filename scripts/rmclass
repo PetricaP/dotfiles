@@ -1,0 +1,3 @@
+#!/bin/bash
+rm include/$1.hpp
+rm src/$1.cpp

@@ -1,0 +1,117 @@
+#=============================================================================
+# dark_powered.toml --- dark powered configuration example for SpaceVim
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: GPLv3
+#=============================================================================
+
+# All SpaceVim option below [option] section
+[options]
+# set spacevim theme. by default colorscheme layer is not loaded,
+# if you want to use more colorscheme, please load the colorscheme
+# layer
+colorscheme = "gruvbox"
+background = "dark"
+default_indent = 4
+filemanager = 'nerdtree'
+expand_tab = 1 
+spacevim_sidebar_width = 25
+spacevim_enable_vimfiler_welcome = 0
+spacevim_enable_ycm = 1
+enable_ycm = true
+enable_guicolors = true
+statusline_separator = "arrow"
+statusline_inactive_separator = "arrow"
+buffer_index_type = 4
+enable_tabline_filetype_icon = true
+enable_statusline_display_mode = false
+deoplete_sources_clang_flags = ['-std=c++17']
+bootstrap_after = "config#after"
+disabled_plugins = ["bbchung/Clamp", "Clamp"]
+enable_vimfiler_welcome = false
+lint_on_save = false
+lint_on_fly = false
+
+# Enable autocomplete layer
+[[layers]]
+name = 'autocomplete'
+auto-completion-return-key-behavior = "smart"
+auto-completion-tab-key-behavior = "cycle"
+
+[[layers]]
+name = 'cscope'
+enable = false
+
+[[layers]]
+name = 'shell'
+default_position = 'bottom'
+default_height = 30
+
+[[layers]]
+name = 'debug'
+
+[[layers]]
+name = 'VersionControl'
+
+[[layers]]
+name = 'colorscheme'
+
+[[layers]]
+name = 'ctrlp'
+
+[[layers]]
+    name = 'lang#c'
+    clang_executable = "/usr/bin/clang"
+    [layer.clang_std]
+    c = "c11"
+    cpp = "c++1z"
+
+[[layers]]
+name = 'lang#java'
+
+[[layers]]
+name = 'tmux'
+enable = false
+
+[[layers]]
+name = 'operator'
+
+[[layers]]
+name = 'denite'
+
+[[layers]]
+name = 'tags'
+
+[[layers]]
+name = 'unite'
+
+[[layers]]
+name = 'unite'
+
+[[layers]]
+name = 'git'
+
+[[custom_plugins]]
+name = 'Shougo/vimproc.vim'
+
+[[custom_plugins]]
+name = 'tpope/vim-fugitive'
+
+[[custom_plugins]]
+name = 'mbbill/undotree'
+
+# [[custom_plugins]]
+# name = 'jeaye/color_coded'
+
+# [[custom_plugins]]
+# name = 'davits/DyeVim'
+
+# [[custom_plugins]]
+# name = 'octol/vim-cpp-enhanced-highlight'
+
+[[custom_plugins]]
+name = 'arakashic/chromatica.nvim'
+
+[[custom_plugins]]
+name = 'tikhomirov/vim-glsl'

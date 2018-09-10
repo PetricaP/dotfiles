@@ -1,0 +1,17 @@
+#!/bin/bash
+if [[ $1 = "-h" ]] || [[ $# = 0 ]]; then
+    echo "This is a tool for implementing unimplemented C++ class methods"
+    echo "Usage: impl <name of class>"
+else
+MATCHES=`cat ./src/$1.cpp | grep "::" | sed "/^\s/d" | sed "/[:]\+(.*::/d"| sed "s/\(.*\)\s.*::\(.*(.*)\){/\1 \2;/" | sed "s/.*::\(.*(.*)\)/\1;/" | sed "s/{//"`
+OUTPUT=`cat ./include/$1.hpp | grep "(.*)"`
+COPY=`echo $MATCHES`
+IFS=';' 
+for i in $COPY; do
+    OUTPUT=`echo $OUTPUT | sed "/[^~]$i/d"`
+done
+echo >> ./src/$1.cpp
+echo $OUTPUT | sed "s/\s\+/ /" | sed "s/^ //" | sed "s/^$1/$1::$1/" | sed "s/~$1/$1::~$1/" | sed "s/ \(.*(.*)\)/ $1::\1/" | sed "s/ $/\n{\n\n}\n/" >> ./src/$1.cpp
+awk '/^$/ {nlstack=nlstack "\n";next;} {printf "%s",nlstack; nlstack=""; print;}' ./src/$1.cpp > temp
+cat temp > ./src/$1.cpp && printf "{\n\n}\n" >> ./src/$1.cpp && rm temp
+fi

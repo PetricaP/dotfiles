@@ -4,14 +4,15 @@
 set $mod Mod4
 set $app Mod1
 floating_modifier $mod
-set $term termite
+set $term gnome-terminal
 set $browser google-chrome-stable
 font pango:Inconsolata 11.7
 exec --no-startup-id compton
 exec --no-startup-id setxkbmap -model pc104 -layout us,ru,ro -option grp:alt_shift_toggle -option "ctrl:nocaps"
-exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/winterspruce.jpg
-exec --no-startup-id ximput set-prop 13 304 1
+exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper_v2.jpg
+# exec --no-startup-id xinput set-prop 13 304 1
 exec --no-startup-id nm-applet
+exec nm-applet
 
 #For cmus:
 set $pause --no-startup-id cmus-remote -u
@@ -26,28 +27,17 @@ set $beg --no-startup-id cmus-remote -k 00:00:00
 
 #Needed for i3-gaps
 hide_edge_borders both
-gaps outer 0
+#gaps outer 0
 #smart_gaps on
 new_window pixel 0
 
 
-#Colors
-set $bg-color 	         #1E2127
-set $inactive-bg-color   #1d2021
-set $focused-bg-color   #838383
-set $text-color          #8F8F8F
-set $inactive-border-color          #3F3F3F
-set $inactive-text-color #8F8F8F
-set $focused-text-color   #000000
-
-# set $background #262626
-set $background #282C34ff
+set $background #151515ff
 set $focused-background #dc6f41
-set $foreground #ffffff
+set $foreground #dfdfdf
 set $gray       #333333
-set $primary    #9FA4A9
-set $secondary  #b06534
-set $tertiary   #b6ad9a
+set $primary    #dddddd
+set $secondary  #707070
 set $warning    #e0a75f
 
 
@@ -68,11 +58,11 @@ bar {
         inactive_workspace $background $background #666666
         urgent_workspace $foreground $warning #666666
     }
-    font pango:System San Francisco 9
+    font pango:System San Francisco 12
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
 #status_command ~/.config/i3/bar/bumblebee-status -m battery pasink cpu cputemp gputemp nic layout disk brightness date weather time -t gruvbox-powerline -p disk.path=/home layout.lang="us|ru|ro" nic.exclude="lo,eno1" date.format="%a, %d %b %Y" time.format="%H:%M"
     position top
-    height 20
+#height 20
 }
 
 bindsym $mod+m		exec $pause
@@ -102,7 +92,7 @@ bindsym $mod+r 		exec --no-startup-id $term -e ranger
 bindsym $app+r 		exec --no-startup-id xterm -T floatme -e ranger
 bindsym $mod+Shift+r restart
 bindsym $mod+t		split toggle
-bindsym $mod+Shift+t	gaps inner current set 15; gaps outer current set 15
+# bindsym $mod+Shift+t	gaps inner current set 15; gaps outer current set 15
 bindsym $mod+Shift+u	resize grow width 10 px or 10ppt
 bindsym $mod+Shift+i	resize grow height 10 px or 10 ppt
 bindsym $mod+h 		exec --no-startup-id $term -e htop
@@ -112,10 +102,10 @@ bindsym $mod+o		exec --no-startup-id $beg
 bindsym $mod+Shift+p	resize shrink width 10 px or 10 ppt
 bindsym $mod+a		exec $term -e qalc
 bindsym $mod+Shift+a	exec pavucontrol
-bindsym $mod+s		gaps inner current plus 5
-bindsym $mod+Shift+s	gaps inner current minus 5
+# bindsym $mod+s		gaps inner current plus 5
+# bindsym $mod+Shift+s	gaps inner current minus 5
 bindsym $mod+d		exec rofi -show run
-bindsym $mod+Shift+d	gaps inner current set 0; gaps outer current set 0
+# bindsym $mod+Shift+d	gaps inner current set 0; gaps outer current set 0
 bindsym $mod+f		fullscreen toggle
 bindsym $mod+Shift+f	exec --no-startup-id syncthing -home="~/.syncthing"
 bindsym $mod+g		workspace prev
@@ -217,15 +207,18 @@ for_window [class="Gnome-calendar"] floating enable
 
 #Media
 bindsym Ctrl+$app+Delete exec i3-msg exit
-bindsym $mod+plus		exec --no-startup-id pamixer -i 5
-bindsym $mod+minus 		exec --no-startup-id pamixer -d 5
-bindsym $mod+greater		exec --no-startup-id pamixer -i 5
-bindsym $mod+Shift+greater	exec --no-startup-id pamixer -i 15
-bindsym $mod+less 		exec --no-startup-id pamixer -d 5
-bindsym $mod+Shift+less		exec --no-startup-id pamixer -d 15
-bindsym XF86AudioRaiseVolume	exec --no-startup-id pamixer -i 5
-bindsym XF86AudioLowerVolume	exec --no-startup-id pamixer -d 5
-bindsym XF86AudioMute		exec --no-startup-id pamixer -t
+bindsym $mod+plus		exec --no-startup-id pactl -- set-sink-volume 0 +10%
+bindsym $mod+minus		exec --no-startup-id pactl -- set-sink-volume 0 -10%
+#bindsym $mod+minus 		exec --no-startup-id amixer -d 5
+#bindsym $mod+greater		exec --no-startup-id amixer -i 5
+bindsym $mod+Shift+greater	exec --no-startup-id amixer -i 15
+bindsym $mod+less 		exec --no-startup-id amixer -d 5
+bindsym $mod+Shift+less		exec --no-startup-id amixer -d 15
+#bindsym XF86AudioRaiseVolume	exec --no-startup-id amixer -i 5
+#bindsym XF86AudioLowerVolume	exec --no-startup-id amixer -d 5
+bindsym XF86AudioRaiseVolume	exec --no-startup-id ~/.local/bin/soundup.sh
+bindsym XF86AudioLowerVolume	exec --no-startup-id ~/.local/bin/sounddown.sh
+bindsym XF86AudioMute		  exec ~/.local/bin/soundmute.sh
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 # increase screen brightness

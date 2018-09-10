@@ -1,2 +1,2 @@
 #!/bin/bash
-make || make -C build
+bear -a make $1
